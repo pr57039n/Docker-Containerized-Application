@@ -31,7 +31,7 @@ pipeline {
             agent {label 'dockerAgent'}
             steps {
                 sh '''#!/bin/bash
-                sudo docker build -t pr57039n/shortener:2.0 .
+                sudo docker build -t pr57039n/shortener:1.0 .
                 '''
             }
         }
@@ -42,7 +42,7 @@ pipeline {
                 string(credentialsId: 'dockerPassword', variable: 'dockerPassword')]) {
                     sh'''#!/bin/bash
                     sudo docker login --username=${dockerUsername} --password=${dockerPassword}
-                    sudo docker push pr57039n/shortener:2.0
+                    sudo docker push pr57039n/shortener:1.0
                     '''
                 }
             }
@@ -76,17 +76,6 @@ pipeline {
                 string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')]) {
                     dir('intTerraform') {
                         sh 'terraform apply plan.tfplan'
-                    }
-                }
-            }
-        }
-        stage ('Terraform Destroy') {
-            agent {label 'terraformAgent'}
-            steps {
-                withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
-                string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')]) {
-                    dir('intTerraform') {
-                        sh 'terraform destroy -auto-approve -var="aws_access_key=$aws_access_key" -var="aws_secret_key=$aws_secret_key"'
                     }
                 }
             }
