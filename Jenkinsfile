@@ -38,9 +38,11 @@ pipeline {
         stage ('Docker Push') {
             agent{label 'dockerAgent'}
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                    sh "docker login -u ${env.dockerHubUser} --password-stdin ${env.dockerHubPassword}"
-                    sh 'sudo docker push pr57039n/shortener:1.0'
+                withCredentials([string(credentialsId: 'dockerUsername', variable: 'dockerUsername'),
+                                    string(credentialsId: 'dockerPassword', variable: 'dockerPassword')]) {
+                    sh'''#!/bin/bash
+                    sudo docker login --username=${dockerUsername} --password=${dockerPassword}
+                    sudo docker push pr57039n/shortener:1.0'
                 }
             }
         }
