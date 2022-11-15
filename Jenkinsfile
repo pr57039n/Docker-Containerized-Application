@@ -27,13 +27,21 @@ pipeline {
                 }
             }
         }
-        stage ('Containerize') {
+        stage ('Docker Build') {
             agent(label 'DockerAgent')
             steps {
                 sh '''#!/bin/bash
-                docker build -t pr57039n/shortener:1.0 .
-                docker push pr57039n/shortener:1.0
+                sudo docker build -t pr57039n/shortener:1.0 .
                 '''
+            }
+        }
+        stage ('Docker Push') {
+            agent(label 'DockerAgent')
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                    sh 'sudo docker push pr57039n/shortener:latest'
+                }
             }
         }
         stage ('TerraInit') {
