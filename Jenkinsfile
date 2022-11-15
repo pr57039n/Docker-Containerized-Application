@@ -40,7 +40,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh 'sudo docker push pr57039n/shortener:latest'
+                    sh 'sudo docker push pr57039n/shortener:1.0'
                 }
             }
         }
