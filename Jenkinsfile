@@ -39,7 +39,7 @@ pipeline {
             agent{label 'dockerAgent'}
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                    sh "docker login -u ${env.dockerHubUser} --password-stdin ${env.dockerHubPassword}"
                     sh 'sudo docker push pr57039n/shortener:1.0'
                 }
             }
