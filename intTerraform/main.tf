@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
   [
   {
       "name": "url-container",
-      "image": "pr57039n/shortener:1.0",
+      "image": "pr57039n/shortener:2.0",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
