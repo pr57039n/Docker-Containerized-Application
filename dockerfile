@@ -2,14 +2,14 @@ FROM python:latest
 
 EXPOSE 5000
 
-RUN apt update
+RUN apt-get update -y
 
-WORKDIR /app
+RUN apt-get install git -y
 
-COPY requirements.txt requirements.txt
+RUN git clone https://github.com/pr57039n/Docker-Containerized-Application
+
+WORKDIR /Docker-Containerized-Application
 
 RUN pip install -r requirements.txt
-
-COPY . .
 
 ENTRYPOINT FLASK_APP=application flask run --host=0.0.0.0
