@@ -28,7 +28,7 @@ pipeline {
             }
         }
         stage ('Docker Build') {
-            agent(label 'DockerAgent')
+            agent(label 'dockerAgent')
             steps {
                 sh '''#!/bin/bash
                 sudo docker build -t pr57039n/shortener:1.0 .
@@ -36,7 +36,7 @@ pipeline {
             }
         }
         stage ('Docker Push') {
-            agent(label 'DockerAgent')
+            agent(label 'dockerAgent')
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
@@ -45,7 +45,7 @@ pipeline {
             }
         }
         stage ('TerraInit') {
-            agent(label 'TerraformAgent')
+            agent(label 'terraformAgent')
             steps {
                 withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
                 string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')]) {
@@ -56,7 +56,7 @@ pipeline {
             }
         }
         stage ('TerraformPlan') {
-            agent(label 'TerraformAgent')
+            agent(label 'terraformAgent')
             steps {
                 withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
                 string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')]) {
@@ -67,7 +67,7 @@ pipeline {
             }
         }
         stage ('TerraformApply') {
-            agent(label 'TerraformApply')
+            agent(label 'terraformAgent')
             steps {
                 withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
                 string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')]) {
