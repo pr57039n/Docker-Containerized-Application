@@ -1,7 +1,6 @@
-<img src="https://github.com/kura-labs-org/kuralabs_deployment_1/blob/main/Kuralogo.png">
-<h1 align="center">kuralabs_deployment_5<h1> 
+<h1 align="center">Docker container deployment<h1> 
   
-Demonstrate your ability to deploy a containerized application.
+Deploying an application utilizing docker to create a container.
 
-## Deployment Document Link:
-- Link to instructions: https://github.com/kura-labs-org/kuralabs_deployment_5/blob/main/Deployment-5_Assignment.pdf
+## Deployment Findings Link:
+- Link to Deployment notes: https://github.com/pr57039n/Docker-Containerized-Application/blob/main/Deployment%205.odt
