@@ -42,7 +42,7 @@ pipeline {
                 string(credentialsId: 'dockerPassword', variable: 'dockerPassword')]) {
                     sh'''#!/bin/bash
                     sudo docker login --username=${dockerUsername} --password=${dockerPassword}
-                    sudo docker push pr57039n/shortener:1.0'
+                    sudo docker push pr57039n/shortener:1.0
                     '''
                 }
             }
