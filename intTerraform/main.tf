@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
   [
   {
       "name": "url-container",
-      "image": "pr57039n/shortener:3.0",
+      "image": "ishtaard/getmsappimage:latest",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -41,7 +41,7 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
       },
       "portMappings": [
         {
-          "containerPort": 5000
+          "containerPort": 8000
         }
       ]
     }
@@ -52,8 +52,8 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
   network_mode             = "awsvpc"
   memory                   = "1024"
   cpu                      = "512"
-  execution_role_arn       = "arn:aws:iam::993640840415:role/ecstaskEX"
-  task_role_arn            = "arn:aws:iam::993640840415:role/ecstaskEX"
+  execution_role_arn       = "arn:aws:iam::717491011807:role/ECSTaskExec"
+  task_role_arn            = "arn:aws:iam::717491011807:role/ECSTaskExec"
 
 }
 
@@ -79,7 +79,7 @@ resource "aws_ecs_service" "aws-ecs-service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.url-app.arn
     container_name   = "url-container"
-    container_port   = 5000
+    container_port   = 8000
   }
 
 }
